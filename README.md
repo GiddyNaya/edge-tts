@@ -28,7 +28,7 @@ dependencies:
 
 ### Live Demo
 
-**Try the live demo**: [https://giddynaya.github.io/edge_tts/](https://giddynaya.github.io/edge_tts/)
+**Try the live demo**: [https://giddynaya.github.io/edge-tts/](https://giddynaya.github.io/edge-tts/)
 
 The demo showcases all features including voice selection, speech customization, and real-time audio playback.
 
@@ -284,9 +284,7 @@ The library provides comprehensive error handling:
 
 This repository includes automatic deployment to GitHub Pages. The Flutter web example is automatically built and deployed when you push to the main branch.
 
-**Live Demo**: [https://giddynaya.github.io/edge_tts/](https://giddynaya.github.io/edge_tts/)
-
-For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+**Live Demo**: [https://giddynaya.github.io/edge-tts/](https://giddynaya.github.io/edge-tts/)
 
 ### Local Web Development
 
