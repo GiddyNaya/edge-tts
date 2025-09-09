@@ -4,16 +4,16 @@ A Flutter package for Microsoft EdgeTTS (Text-to-Speech) service integration wit
 
 ## Features
 
-- 🎤 **Text-to-Speech Conversion**: Convert text to high-quality speech using Microsoft's EdgeTTS service
-- 🌍 **Multiple Languages**: Support for 100+ languages and regions including English, Spanish, French, German, Chinese, Japanese, Korean, and many more
-- 🎭 **Hundreds of Voices**: Access to hundreds of neural voices across different languages and accents
-- ⚡ **Real-time Streaming**: Stream audio as it's being generated with low latency
-- 🔄 **Persistent WebSocket Connections**: Efficient WebSocket connections using `web_socket_channel` package that are reused across requests
-- 🎛️ **Speech Controls**: Adjust rate, volume, and pitch of speech with fine-grained control
-- 🔧 **Flexible Architecture**: Decoupled audio playback with callback interfaces
-- 📱 **Cross-platform**: Works on iOS, Android, Web, Windows, macOS, and Linux
-- 🚀 **High Performance**: Optimized for fast response times and minimal resource usage
-- 🔌 **Modern WebSocket**: Uses the `web_socket_channel` package for robust cross-platform WebSocket support
+- **Text-to-Speech Conversion**: Convert text to high-quality speech using Microsoft's EdgeTTS service
+- **Multiple Languages**: Support for 100+ languages and regions including English, Spanish, French, German, Chinese, Japanese, Korean, and many more
+- **Hundreds of Voices**: Access to hundreds of neural voices across different languages and accents
+- **Real-time Streaming**: Stream audio as it's being generated with low latency
+- **Persistent WebSocket Connections**: Efficient WebSocket connections using `web_socket_channel` package that are reused across requests
+- **Speech Controls**: Adjust rate, volume, and pitch of speech with fine-grained control
+- **Flexible Architecture**: Decoupled audio playback with callback interfaces
+- **Cross-platform**: Works on iOS, Android, Web, Windows, macOS, and Linux
+- **High Performance**: Optimized for fast response times and minimal resource usage
+- **Modern WebSocket**: Uses the `web_socket_channel` package for robust cross-platform WebSocket support
 
 ## Getting started
 
@@ -25,6 +25,12 @@ Add this to your package's `pubspec.yaml` file:
 dependencies:
   edge_tts: ^1.6.0
 ```
+
+### Live Demo
+
+**Try the live demo**: [https://giddynaya.github.io/edge_tts/](https://giddynaya.github.io/edge_tts/)
+
+The demo showcases all features including voice selection, speech customization, and real-time audio playback.
 
 ### WebSocket Implementation
 
@@ -271,6 +277,25 @@ The library provides comprehensive error handling:
 - Automatic reconnection on failures
 - Detailed error messages for debugging
 - Graceful degradation when services are unavailable
+
+## Deployment
+
+### GitHub Pages
+
+This repository includes automatic deployment to GitHub Pages. The Flutter web example is automatically built and deployed when you push to the main branch.
+
+**Live Demo**: [https://giddynaya.github.io/edge_tts/](https://giddynaya.github.io/edge_tts/)
+
+For detailed deployment instructions, see [DEPLOYMENT.md](DEPLOYMENT.md).
+
+### Local Web Development
+
+To run the example locally:
+
+```bash
+cd example
+flutter run -d chrome
+```
 
 ## License
 
