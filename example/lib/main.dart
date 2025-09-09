@@ -2,6 +2,7 @@ import 'package:edge_tts_demo/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:edge_tts/edge_tts.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:typed_data';
 
 void main() {
@@ -14,7 +15,8 @@ class EdgeTTSDemoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'EdgeTTS Demo',
+      title: 'EdgeTTS by GiddyNaya',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
@@ -304,9 +306,46 @@ class _EdgeTTSDemoPageState extends State<EdgeTTSDemoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('EdgeTTS Demo'),
+        title: const Text('EdgeTTS by GiddyNaya'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 2,
+        actions: [
+          Builder(
+            builder: (context) {
+              final screenWidth = MediaQuery.of(context).size.width;
+              final showText = screenWidth > 800;
+
+              return TextButton.icon(
+                onPressed: () {
+                  // Open GitHub repository
+                  launchUrl(
+                    Uri.parse('https://github.com/GiddyNaya/edge-tts'),
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
+                icon: Image.asset('assets/images/github-logo.png',
+                    width: 40, height: 40),
+                label: showText
+                    ? const Text(
+                        'View on GitHub',
+                        style: TextStyle(
+                          color: Colors.black87,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                style: TextButton.styleFrom(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  minimumSize: Size.zero,
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 8),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

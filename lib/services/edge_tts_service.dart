@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:async';
+import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
 import 'package:uuid/uuid.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -156,9 +157,12 @@ class EdgeTTSService {
       // Generate connection ID for this session
       _connectionId = _generateConnectionId();
 
+      // Generate Sec-MS-GEC parameter for authentication
+      final secMsGec = _generateSecMsGec(_trustedClientToken);
+
       // Create WebSocket URL with additional parameters
       final wsUrl =
-          '$_wsBaseUrl$_wsPath?TrustedClientToken=$_trustedClientToken&Sec-MS-GEC=24879F5E6E617B819EFB7214C2BF3A6F8316E91A9D0EB5888133D0A77DE430A2&Sec-MS-GEC-Version=1-130.0.2849.68&ConnectionId=$_connectionId';
+          '$_wsBaseUrl$_wsPath?TrustedClientToken=$_trustedClientToken&Sec-MS-GEC=$secMsGec&Sec-MS-GEC-Version=1-130.0.2849.68&ConnectionId=$_connectionId';
 
       // Create WebSocket connection using WebSocketChannel
       _webSocketChannel = WebSocketChannel.connect(
@@ -737,12 +741,6 @@ class EdgeTTSService {
     }
   }
 
-  /// Helper method to generate WebSocket key
-  String _generateWebSocketKey() {
-    final random = List.generate(16, (i) => Random().nextInt(256));
-    return base64.encode(random);
-  }
-
   /// Generate a unique connection ID for the WebSocket session
   /// Matches the JavaScript implementation format: xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx
   String _generateConnectionId() {
@@ -761,6 +759,29 @@ class EdgeTTSService {
 
     // Generate connection ID in format: xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx
     return '${generateHex(8)}-${generateHex(4)}-${generateHex(4)}-${generateY()}${generateHex(3)}-${generateHex(12)}';
+  }
+
+  /// Generate Sec-MS-GEC parameter for WebSocket authentication
+  /// Matches the JavaScript implementation using SHA-256 hash
+  String _generateSecMsGec(String trustedClientToken) {
+    // Get current timestamp in seconds since Unix epoch
+    final now = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+    // Add 11644473600 seconds (difference between Unix epoch and Windows epoch)
+    final windowsEpoch = now + 11644473600;
+
+    // Round down to nearest 300-second interval
+    final roundedTime = (windowsEpoch ~/ 300) * 300;
+
+    // Create the input string: timestamp * 10000000 + trustedClientToken
+    final inputString = '${roundedTime * 10000000}$trustedClientToken';
+
+    // Convert to bytes and compute SHA-256 hash
+    final bytes = utf8.encode(inputString);
+    final digest = sha256.convert(bytes);
+
+    // Convert to uppercase hex string
+    return digest.toString().toUpperCase();
   }
 
   /// Extract audio content from WebSocket message
